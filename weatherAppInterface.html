@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Weather App</title>
+    <link rel="stylesheet" href="./weatherAppStyle.css">
+    <script src="https://kit.fontawesome.com/7caa4bdb6b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div>
+            <i>ceva soare aici</i>
+           <span>Weather Now</span> 
+        </div>
+        <div class="header-btn">
+            <i>ceva settings engine aici</i>
+            <button id="units-btn">Units</button>
+        </div>
+    </header>
+
+    <main>
+        <div id="settings" style="display: none;">
+            <div class="setting">
+                <span>Temperature</span>
+                <div class="options">
+                    <label>
+                    <input type="radio" name="temperature-unit" value="celsius" checked>
+                    Celsius (°C)
+                    </label>
+                    <label>
+                    <input type="radio" name="temperature-unit" value="fahrenheit">
+                    Fahrenheit (°F)
+                    </label>
+                </div>
+            </div>
+            <div class="setting">
+                <span>Wind Speed</span>
+                <div class="options">
+                    <label>
+                    <input type="radio" name="wind-unit" value="kmh" checked>
+                    km/h
+                    </label>
+                    <label>
+                    <input type="radio" name="wind-unit" value="mph">
+                    mph
+                    </label>
+                </div>
+            </div>
+            <div class="setting">
+                <span>Precipitation</span>
+                <div class="options">
+                    <label>
+                    <input type="radio" name="precipitation-unit" value="mm" checked>
+                    Millimeters (mm)
+                    </label>
+                    <label>
+                    <input type="radio" name="precipitation-unit" value="in">
+                    Inches (in)
+                    </label>
+                </div>
+            </div>
+        </div>
+        <h1 class="title">How's the sky looking today?</h1>
+        <div class="search-engine">
+            <div class="search">
+                <i>o lupa</i> 
+                <input type="text" id="search-input" placeholder="Search for a place..."> 
+                <!-- api implications for auto-complete while writing -->
+            </div>
+            <button id="search-btn">Search</button>
+        </div>
+        <div class="api-container">
+            <div class="section1">
+                <div class="current-weather">
+                    <div class="left-side">
+                        <p id="current-location"></p>
+                        <p id="current-date"></p>
+                    </div>
+                    <div class="right-side">
+                        <i>simbol</i>
+                        <p id="current-temp"></p>
+                    </div>
+                </div>
+                <div class="details">
+                    <div class="detail">
+                        <p>Feels Like</p>
+                        <p id="feels-like"></p>
+                    </div>
+                    <div class="detail">
+                        <p>Humidity</p>
+                        <p id="humidity"></p>
+                    </div>
+                    <div class="detail">
+                        <p>Wind</p>
+                        <p id="speed"> <span></span></p>
+                    </div>
+                    <div clas="detail">
+                        <p>Precipitation</p>
+                        <p id="precipitation"> <span></span></p>
+                    </div>
+                </div>
+                <div class="daily-forecast">
+                    <p>Daily forecast</p>
+                    <div class="next-days">
+                        <div class="day">
+                            <p id="week-day"></p>
+                            <i></i>
+                            <div class="interval">
+                                <p id="highest-temp">cea mai mare</p>
+                                <p id="lowest-temp">cea mai mica</p>
+                            </div>
+                        </div>
+                        <!-- possible inserations of each day via handling api in js file (7 days of forecast) -->
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="section2">
+                <div class="header-section">
+                    <p>Hourly forecast</p>
+                    <select name="forecast-options" id="forecast-options">
+                        <option value="today" selected>Today</option>
+                        <option value="tomorrow">Tomorrow</option>
+                    </select>
+                </div>
+                <div class="hours">
+                    <div class="hour">
+                        <div class="detail-hour">
+                            <i></i>
+                            <p id="hour"></p>
+                            <p id="daytime"></p>
+                        </div>
+                        <p id="temp"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+<script src="./weatherAppScript.js"></script>
+</html> 
