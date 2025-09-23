@@ -6,19 +6,21 @@
     <title>My Weather App</title>
     <link rel="stylesheet" href="./weatherAppStyle.css">
     <script src="https://kit.fontawesome.com/7caa4bdb6b.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
     <header>
-        <div>
-            <i>ceva soare aici</i>
-           <span>Weather Now</span> 
-        </div>
-        <div class="header-btn">
-            <i>ceva settings engine aici</i>
-            <button id="units-btn">Units</button>
-        </div>
+            <img src="./icons/logo.png" alt="logo">
+            <div id="units-btn">
+                <i class="fa-solid fa-gear"></i>
+                <p>Units</p>
+                <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <!-- <button id="units-btn"> <img src="./icons/units.png" alt=""> <span>Units</span> <img src="./icons/dropdown2.png" alt=""></button> -->
     </header>
+<div class="container">
 
     <main>
         <div id="settings" style="display: none;">
@@ -65,7 +67,7 @@
         <h1 class="title">How's the sky looking today?</h1>
         <div class="search-engine">
             <div class="search">
-                <i>o lupa</i> 
+                <img src="./icons/icon-search.png" alt="">
                 <input type="text" id="search-input" placeholder="Search for a place..."> 
                 <!-- api implications for auto-complete while writing -->
             </div>
