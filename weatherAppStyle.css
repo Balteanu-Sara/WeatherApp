@@ -6,6 +6,8 @@
 :root{
     --dark-blue: #02012b;
     --dark-grey: #2f2f49;
+    --white: #ffffff;
+    --blue-sky: #4657d9;
 }
 
 body{
@@ -22,15 +24,13 @@ body{
     align-items: center;
     justify-content: center;
     width: 70%;
-    background-color: bisque;
+    border: solid white ;
 }
 
 header{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color:var(--dark-blue);
-    
     width: 70%;
     margin: 20px;
     height: 80px;
@@ -51,29 +51,73 @@ header > img{
     align-items: center;
     font-size: larger;
     cursor: pointer;
-    color: white;
+    color: var(--white);
     font-family: 'DM Sans', sans-serif;
     font-weight: 400;
 }
 
 #units-btn.active{
-    border: white;
+    border: var(--white);
     border-style: solid;
     border-width: thin;
     border-radius: 10px;
 }
 
+.title{
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 700;
+    font-size: 50px;
+    color: var(--white);
+}
+
 .search-engine{
-    background-color: blueviolet;
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
-
+    width: 50%;
+    height: 60px;
+    margin: 30px;
+    color: white;
 }
 
 .search{
     display: flex;
-    background-color: green;
+    background-color: var(--dark-grey);
     align-items: center;
+    width: 70%;
+    height: 50px;
+    border-radius: 10px;
+    padding-left: 20px;
+    margin-right: 20px;
+}
+
+.search > input {
+    background-color: var(--dark-grey);
+    outline: none;
+    border: none;
+    margin-left: 20px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--white);
+    font-weight: 500;
+    font-size: larger;
+    width: 80%;
+}
+
+#search-btn{
+    width: 100px;
+    height: 50px;
+    background-color: var(--blue-sky);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--white);
+    font-weight: 500;
+    font-size: larger;
+    border-radius: 10px;
+    border: none; /*nu ramane asa */
+}
+
+.api-container{
+    background-color: bisque;
+    
 }
 
