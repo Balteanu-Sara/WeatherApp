@@ -63,11 +63,6 @@ header > img{
     border-radius: 10px;
 }
 
-main{
-    display: flex;
-    flex-direction: column;
-}
-
 .search-engine{
     background-color: blueviolet;
     display: flex;
