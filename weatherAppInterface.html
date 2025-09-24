@@ -75,30 +75,30 @@
         <div class="section1">
             <div class="current-weather">
                 <div class="left-side">
-                    <p id="current-location"></p>
-                    <p id="current-date"></p>
+                    <p id="current-location">Berlin, Germany</p>
+                    <p id="current-date">Tuesday, Aug 5, 2025</p>
                 </div>
                 <div class="right-side">
                     <i>simbol</i>
-                    <p id="current-temp"></p>
+                    <p id="current-temp">20°</p>
                 </div>
             </div>
             <div class="details">
                 <div class="detail">
                     <p>Feels Like</p>
-                    <p id="feels-like"></p>
+                    <p id="feels-like">18°</p>
                 </div>
                 <div class="detail">
                     <p>Humidity</p>
-                    <p id="humidity"></p>
+                    <p id="humidity">46%</p>
                 </div>
                 <div class="detail">
                     <p>Wind</p>
-                    <p id="speed"> <span></span></p>
+                    <p id="speed">14<span>km/h</span></p>
                 </div>
                 <div clas="detail">
                     <p>Precipitation</p>
-                    <p id="precipitation"> <span></span></p>
+                    <p id="precipitation">0<span>mm</span></p>
                 </div>
             </div>
             <div class="daily-forecast">
@@ -121,19 +121,70 @@
         <div class="section2">
             <div class="header-section">
                 <p>Hourly forecast</p>
-                <select name="forecast-options" id="forecast-options">
-                    <option value="today" selected>Today</option>
-                    <option value="tomorrow">Tomorrow</option>
-                </select>
+                <div class="forecast-options">
+                    <select name="forecast-options" id="forecast-options">
+                        <option value="today" selected>Today</option>
+                        <option value="tomorrow">Tomorrow</option>
+                    </select>
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
             </div>
             <div class="hours">
                 <div class="hour">
-                    <div class="detail-hour">
-                        <i></i>
-                        <p id="hour"></p>
-                        <p id="daytime"></p>
+                    <div class="left">
+                        <img src="./icons/icon-drizzle.webp" alt="">
+                        <p id="hour">3 <span id="daytime">PM</span></p>
                     </div>
-                    <p id="temp"></p>
+                    <p id="temp">21°</p>
+                </div>
+                <div class="hour">
+                    <div class="left">
+                        <img src="./icons/icon-drizzle.webp" alt="">
+                        <p id="hour">3 <span id="daytime">PM</span></p>
+                    </div>
+                    <p id="temp">21°</p>
+                </div>
+                <div class="hour">
+                    <div class="left">
+                        <img src="./icons/icon-drizzle.webp" alt="">
+                        <p id="hour">3 <span id="daytime">PM</span></p>
+                    </div>
+                    <p id="temp">21°</p>
+                </div>
+                <div class="hour">
+                    <div class="left">
+                        <img src="./icons/icon-drizzle.webp" alt="">
+                        <p id="hour">3 <span id="daytime">PM</span></p>
+                    </div>
+                    <p id="temp">21°</p>
+                </div>
+                <div class="hour">
+                    <div class="left">
+                        <img src="./icons/icon-drizzle.webp" alt="">
+                        <p id="hour">3 <span id="daytime">PM</span></p>
+                    </div>
+                    <p id="temp">21°</p>
+                </div>
+                <!-- <div class="hour">
+                    <div class="left">
+                        <img src="./icons/icon-drizzle.webp" alt="">
+                        <p id="hour">3 <span id="daytime">PM</span></p>
+                    </div>
+                    <p id="temp">21°</p>
+                </div>
+                <div class="hour">
+                    <div class="left">
+                        <img src="./icons/icon-drizzle.webp" alt="">
+                        <p id="hour">3 <span id="daytime">PM</span></p>
+                    </div>
+                    <p id="temp">21°</p>
+                </div>
+                <div class="hour">
+                    <div class="left">
+                        <img src="./icons/icon-drizzle.webp" alt="">
+                        <p id="hour">3 <span id="daytime">PM</span></p>
+                    </div>
+                    <p id="temp">21°</p> -->
                 </div>
             </div>
         </div>
