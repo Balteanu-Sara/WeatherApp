@@ -7,6 +7,7 @@
     --dark-blue: #02012b;
     --dark-grey: #25253F;
     --light-grey: #2f2f49;
+    --outline-grey: #3b3b55;
     --white: #ffffff;
     --blue-sky: #4657d9;
 }
@@ -210,36 +211,47 @@ header > img{
     font-weight: 500;
 }
 
-.forecast-options{
-    display:flex;
-    justify-content: center;
-    align-items: center;
+#forecast-options{
+    appearance: none;            
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
     width: 120px;
+    padding: 10px;
     background-color: var(--light-grey);
     color: var(--white);
     border-radius: 10px;
-    padding: 10px;
-}
-
-.forecast-options > select{
-    appearance: none;
-    border: none;font-family: 'DM Sans', sans-serif;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
     font-weight: 400;
-    font-size: large;
-    background-color: var(--light-grey);
-    color: var(--white);
-    padding-right: 10px;
+    font-size: medium;
+
+    background-image: url("data:image/svg+xml;utf8,<svg fill='white' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'><path d='M31.3 192h257.4c28.4 0 42.7 34.5 22.6 54.6L182.6 375.4c-12.5 12.5-32.8 12.5-45.3 0L8.7 246.6C-11.4 226.5 2.9 192 31.3 192z'/></svg>");
+    background-repeat: no-repeat;
+    background-size: 12px;
+    background-position:center right 12px;
 }
 
-.forecast-options > select:focus{
+#forecast-options:focus{
     outline: none;
+}
+
+#forecast-options > option:hover {
+  background: var(--dark-blue);
+}
+
+#forecast-options > option{
+    padding-right: 10px;
 }
 
 .hours{
     display: flex;
     flex-direction: column;
-    /* overflow-y: scroll;  */
     height: 620px;
+    overflow-y: scroll; 
+    scrollbar-width: none;
+    scroll-behavior: smooth;
 }
 
 .hour{
@@ -249,8 +261,10 @@ header > img{
     justify-content: space-between;
     background-color: var(--light-grey);
     border-radius: 10px;
-    margin: 10px 0px 10px;
+    margin: 10px 1px 10px;
     height: 70px;
+    outline: var(--outline-grey) thin;
+    outline-style: solid;
 }
 
 .left{
@@ -266,7 +280,7 @@ header > img{
 }
 
 #temp{
-    margin: 10px;
+    margin: 20px;
     font-size: x-large;
 }
 
