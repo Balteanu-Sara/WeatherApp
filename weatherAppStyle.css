@@ -145,7 +145,7 @@ header > img{
 }
 
 .current-weather{
-    background-image: url("./icons/bg-today-large1.png");
+    background-image: url("./icons/bg-today-large.png");
     background-size: cover;
     background-position: center;
     border-radius: 15px;
