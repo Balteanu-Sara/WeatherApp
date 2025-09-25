@@ -145,25 +145,55 @@ header > img{
 }
 
 .current-weather{
-    background-image: url("./icons/bg-today-large.svg");
+    background-image: url("./icons/bg-today-large1.png");
     background-size: cover;
     background-position: center;
     border-radius: 15px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     height: 330px;
     margin-bottom: 20px;
+    font-family: 'DM Sans', sans-serif;
 }
 
 .left-side{
     display: flex;
     flex-direction: column;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.left-side > p{
+    margin: 5px 20px;
+}
+
+#current-location{
+    font-weight: 600;
+    font-size: 40px;
+}
+
+#current-date{
+    font-size: large;
 }
 
 .right-side{
     display: flex;
     flex-direction: row;
+    align-items: center;
+    font-size: larger;
+}
+
+.right-side > img{
+    height: 110px;
+    width: auto;
+    position: relative;
+}
+
+.right-side > p{
+    margin: 0px 40px;
+    font-size: 100px;
+    font-weight: 500;
 }
 
 .details{
@@ -282,5 +312,4 @@ header > img{
 #temp{
     margin: 20px;
     font-size: x-large;
-}
-
+} 
