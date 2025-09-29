@@ -1,240 +1,238 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Weather App</title>
-    <link rel="stylesheet" href="./weatherAppStyle.css">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./weatherAppStyle.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
 
-    <script src="https://kit.fontawesome.com/7caa4bdb6b.js" crossorigin="anonymous"></script>
-</head>
-<body>
-<header>
-        <img src="./icons/logo.png" alt="logo">
+    <script
+      src="https://kit.fontawesome.com/7caa4bdb6b.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <header>
+      <img src="./icons/logo.png" alt="logo" />
+      <div class="units-container">
         <div id="units-btn">
-            <i class="fa-solid fa-gear"></i>
-            <p>Units</p>
-            <i class="fa-solid fa-caret-down"></i>
+          <i class="fa-solid fa-gear"></i>
+          <p>Units</p>
+          <i class="fa-solid fa-caret-down"></i>
         </div>
-        <!-- <button id="units-btn"> <img src="./icons/units.png" alt=""> <span>Units</span> <img src="./icons/dropdown2.png" alt=""></button> -->
-</header>
-<div class="container">
-    <div id="settings" style="display: none;">
-        <div class="setting">
-            <span>Temperature</span>
-            <div class="options">
-                <label>
-                <input type="radio" name="temperature-unit" value="celsius" checked>
-                Celsius (°C)
-                </label>
-                <label>
-                <input type="radio" name="temperature-unit" value="fahrenheit">
-                Fahrenheit (°F)
-                </label>
+        <div id="settings" style="display: none">
+          <div class="setting">
+            <p>Temperature</p>
+            <div class="options" id="temperature">
+              <p id="celsius">Celsius (°C)</p>
+              <p id="fahrenheit">Fahrenheit (°F)</p>
             </div>
-        </div>
-        <div class="setting">
-            <span>Wind Speed</span>
-            <div class="options">
-                <label>
-                <input type="radio" name="wind-unit" value="kmh" checked>
-                km/h
-                </label>
-                <label>
-                <input type="radio" name="wind-unit" value="mph">
-                mph
-                </label>
+          </div>
+          <hr />
+          <div class="setting">
+            <p>Wind Speed</p>
+            <div class="options" id="speed">
+              <p id="km">km/h</p>
+              <p id="mph">mph</p>
             </div>
-        </div>
-        <div class="setting">
-            <span>Precipitation</span>
-            <div class="options">
-                <label>
-                <input type="radio" name="precipitation-unit" value="mm" checked>
-                Millimeters (mm)
-                </label>
-                <label>
-                <input type="radio" name="precipitation-unit" value="in">
-                Inches (in)
-                </label>
+          </div>
+          <hr />
+          <div class="setting">
+            <p>Precipitation</p>
+            <div class="options" id="precipitation">
+              <p id="mm">Millimeters (mm)</p>
+              <p id="in">Inches (in)</p>
             </div>
+          </div>
         </div>
-    </div>
-    <h1 class="title">How's the sky looking today?</h1>
-    <div class="search-engine">
+      </div>
+      <!-- <button id="units-btn"> <img src="./icons/units.png" alt=""> <span>Units</span> <img src="./icons/dropdown2.png" alt=""></button> -->
+    </header>
+    <div class="container">
+      <h1 class="title">How's the sky looking today?</h1>
+      <div class="search-engine">
         <div class="search">
-            <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-            <input type="text" id="search-input" placeholder="Search for a place..."> 
-            <!-- api implications for auto-complete while writing -->
+          <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search for a place..."
+          />
+          <!-- api implications for auto-complete while writing -->
         </div>
         <button id="search-btn">Search</button>
-    </div>
-    <div class="api-container">
+      </div>
+      <div class="api-container">
         <div class="section1">
-            <div class="current-weather">
-                <div class="left-side">
-                    <p id="current-location">Berlin, Germany</p>
-                    <p id="current-date">Tuesday, Aug 5, 2025</p>
-                </div>
-                <div class="right-side">
-                    <img src="./icons/icon-drizzle.webp" alt="">
-                    <p id="current-temp">20°</p>
-                </div>
+          <div class="current-weather">
+            <div class="left-side">
+              <p id="current-location">Berlin, Germany</p>
+              <p id="current-date">Tuesday, Aug 5, 2025</p>
             </div>
-            <div class="details">
-                <div class="detail">
-                    <p class="text1">Feels Like</p>
-                    <p class="text2" id="feels-like">18°</p>
-                </div>
-                <div class="detail">
-                    <p class="text1">Humidity</p>
-                    <p class="text2" id="humidity">46%</p>
-                </div>
-                <div class="detail">
-                    <p class="text1">Wind</p>
-                    <p class="text2" id="speed">14 <span>km/h</span></p>
-                </div>
-                <div class="detail">
-                    <p class="text1">Precipitation</p>
-                    <p class="text2" id="precipitation">0 <span>mm</span></p>
-                </div>
+            <div class="right-side">
+              <img src="./icons/icon-drizzle.webp" alt="" />
+              <p id="current-temp">20°</p>
             </div>
-            <div class="daily-forecast">
-                <p>Daily forecast</p>
-                <div class="days">
-                    <div class="day">
-                        <p id="week-day">Tue</p>
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <div class="interval">
-                            <p id="highest-temp">20°</p>
-                            <p id="lowest-temp">14°</p>
-                        </div>
-                    </div>
-                    <div class="day">
-                        <p id="week-day">Tue</p>
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <div class="interval">
-                            <p id="highest-temp">20°</p>
-                            <p id="lowest-temp">14°</p>
-                        </div>
-                    </div>
-                    <div class="day">
-                        <p id="week-day">Tue</p>
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <div class="interval">
-                            <p id="highest-temp">20°</p>
-                            <p id="lowest-temp">14°</p>
-                        </div>
-                    </div>
-                    <div class="day">
-                        <p id="week-day">Tue</p>
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <div class="interval">
-                            <p id="highest-temp">20°</p>
-                            <p id="lowest-temp">14°</p>
-                        </div>
-                    </div>
-                    <div class="day">
-                        <p id="week-day">Tue</p>
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <div class="interval">
-                            <p id="highest-temp">20°</p>
-                            <p id="lowest-temp">14°</p>
-                        </div>
-                    </div>
-                    <div class="day">
-                        <p id="week-day">Tue</p>
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <div class="interval">
-                            <p id="highest-temp">20°</p>
-                            <p id="lowest-temp">14°</p>
-                        </div>
-                    </div>
-                    <div class="day">
-                        <p id="week-day">Tue</p>
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <div class="interval">
-                            <p id="highest-temp">20°</p>
-                            <p id="lowest-temp">14°</p>
-                        </div>
-                    </div>
-                    <!-- possible inserations of each day via handling api in js file (7 days of forecast) -->
-                    
-                </div>
+          </div>
+          <div class="details">
+            <div class="detail">
+              <p class="text1">Feels Like</p>
+              <p class="text2" id="feels-like">18°</p>
             </div>
+            <div class="detail">
+              <p class="text1">Humidity</p>
+              <p class="text2" id="humidity">46%</p>
+            </div>
+            <div class="detail">
+              <p class="text1">Wind</p>
+              <p class="text2" id="speed">14 <span>km/h</span></p>
+            </div>
+            <div class="detail">
+              <p class="text1">Precipitation</p>
+              <p class="text2" id="precipitation">0 <span>mm</span></p>
+            </div>
+          </div>
+          <div class="daily-forecast">
+            <p>Daily forecast</p>
+            <div class="days">
+              <div class="day">
+                <p id="week-day">Tue</p>
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <div class="interval">
+                  <p id="highest-temp">20°</p>
+                  <p id="lowest-temp">14°</p>
+                </div>
+              </div>
+              <div class="day">
+                <p id="week-day">Tue</p>
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <div class="interval">
+                  <p id="highest-temp">20°</p>
+                  <p id="lowest-temp">14°</p>
+                </div>
+              </div>
+              <div class="day">
+                <p id="week-day">Tue</p>
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <div class="interval">
+                  <p id="highest-temp">20°</p>
+                  <p id="lowest-temp">14°</p>
+                </div>
+              </div>
+              <div class="day">
+                <p id="week-day">Tue</p>
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <div class="interval">
+                  <p id="highest-temp">20°</p>
+                  <p id="lowest-temp">14°</p>
+                </div>
+              </div>
+              <div class="day">
+                <p id="week-day">Tue</p>
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <div class="interval">
+                  <p id="highest-temp">20°</p>
+                  <p id="lowest-temp">14°</p>
+                </div>
+              </div>
+              <div class="day">
+                <p id="week-day">Tue</p>
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <div class="interval">
+                  <p id="highest-temp">20°</p>
+                  <p id="lowest-temp">14°</p>
+                </div>
+              </div>
+              <div class="day">
+                <p id="week-day">Tue</p>
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <div class="interval">
+                  <p id="highest-temp">20°</p>
+                  <p id="lowest-temp">14°</p>
+                </div>
+              </div>
+              <!-- possible inserations of each day via handling api in js file (7 days of forecast) -->
+            </div>
+          </div>
         </div>
 
         <div class="section2">
-            <div class="header-section">
-                <p>Hourly forecast</p>
-                <select name="forecast-options" id="forecast-options">
-                    <option value="today" selected>Today</option>
-                    <option value="tomorrow">Tomorrow</option>
-                </select>
+          <div class="header-section">
+            <p>Hourly forecast</p>
+            <select name="forecast-options" id="forecast-options">
+              <option value="today" selected>Today</option>
+              <option value="tomorrow">Tomorrow</option>
+            </select>
+          </div>
+          <div class="hours">
+            <div class="hour">
+              <div class="left">
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <p id="hour">3 <span id="daytime">PM</span></p>
+              </div>
+              <p id="temp">21°</p>
             </div>
-            <div class="hours">
-                <div class="hour">
-                    <div class="left">
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <p id="hour">3 <span id="daytime">PM</span></p>
-                    </div>
-                    <p id="temp">21°</p>
-                </div>
-                <div class="hour">
-                    <div class="left">
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <p id="hour">3 <span id="daytime">PM</span></p>
-                    </div>
-                    <p id="temp">21°</p>
-                </div>
-                <div class="hour">
-                    <div class="left">
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <p id="hour">3 <span id="daytime">PM</span></p>
-                    </div>
-                    <p id="temp">21°</p>
-                </div>
-                <div class="hour">
-                    <div class="left">
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <p id="hour">3 <span id="daytime">PM</span></p>
-                    </div>
-                    <p id="temp">21°</p>
-                </div>
-                <div class="hour">
-                    <div class="left">
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <p id="hour">3 <span id="daytime">PM</span></p>
-                    </div>
-                    <p id="temp">21°</p>
-                </div>
-                <div class="hour">
-                    <div class="left">
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <p id="hour">3 <span id="daytime">PM</span></p>
-                    </div>
-                    <p id="temp">21°</p>
-                </div>
-                <div class="hour">
-                    <div class="left">
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <p id="hour">3 <span id="daytime">PM</span></p>
-                    </div>
-                    <p id="temp">21°</p>
-                </div>
-                <div class="hour">
-                    <div class="left">
-                        <img src="./icons/icon-drizzle.webp" alt="">
-                        <p id="hour">3 <span id="daytime">PM</span></p>
-                    </div>
-                    <p id="temp">21°</p>
-                </div>
+            <div class="hour">
+              <div class="left">
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <p id="hour">3 <span id="daytime">PM</span></p>
+              </div>
+              <p id="temp">21°</p>
             </div>
+            <div class="hour">
+              <div class="left">
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <p id="hour">3 <span id="daytime">PM</span></p>
+              </div>
+              <p id="temp">21°</p>
+            </div>
+            <div class="hour">
+              <div class="left">
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <p id="hour">3 <span id="daytime">PM</span></p>
+              </div>
+              <p id="temp">21°</p>
+            </div>
+            <div class="hour">
+              <div class="left">
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <p id="hour">3 <span id="daytime">PM</span></p>
+              </div>
+              <p id="temp">21°</p>
+            </div>
+            <div class="hour">
+              <div class="left">
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <p id="hour">3 <span id="daytime">PM</span></p>
+              </div>
+              <p id="temp">21°</p>
+            </div>
+            <div class="hour">
+              <div class="left">
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <p id="hour">3 <span id="daytime">PM</span></p>
+              </div>
+              <p id="temp">21°</p>
+            </div>
+            <div class="hour">
+              <div class="left">
+                <img src="./icons/icon-drizzle.webp" alt="" />
+                <p id="hour">3 <span id="daytime">PM</span></p>
+              </div>
+              <p id="temp">21°</p>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-</body>
-<script src="./weatherAppScript.js"></script>
-</html> 
+  </body>
+  <script src="./weatherAppScript.js"></script>
+</html>
