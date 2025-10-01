@@ -489,7 +489,7 @@ hr {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 769px) {
   header {
     width: 70%;
     margin: 20px;
@@ -571,10 +571,6 @@ hr {
     font-weight: 500;
     font-size: medium;
     width: 80%;
-  }
-
-  .search > input::placeholder {
-    color: var(--white);
   }
 
   #search-btn {
@@ -729,5 +725,91 @@ hr {
 @media (max-width: 625px) {
   .text2 > span {
     font-size: 10px;
+  }
+}
+
+@media (max-width: 431px) {
+  header {
+    width: 100%;
+    margin: 0px;
+    padding: 10px 0px;
+  }
+
+  header > img {
+    width: 150px;
+    margin-left: 20px;
+  }
+
+  #units-btn {
+    height: 30px;
+    font-size: small;
+    margin-right: 20px;
+    border-radius: 5px;
+  }
+
+  #units-btn > i {
+    font-size: smaller;
+  }
+
+  #settings {
+    width: 140px;
+    right: 20px;
+    top: 40px;
+  }
+
+  .setting {
+    margin: 10px;
+  }
+
+  .setting > p {
+    font-size: small;
+  }
+
+  .options > p {
+    font-size: smaller;
+  }
+
+  .right-side > p {
+    font-size: 20px;
+  }
+
+  .container {
+    width: 100%;
+  }
+
+  .title {
+    width: 80%;
+    font-size: 50px;
+    margin: 20px 0px;
+  }
+
+  .search-engine {
+    flex-direction: column;
+    width: 90%;
+    height: unset;
+    margin: 20px 0px;
+  }
+
+  .search {
+    height: 45px;
+    padding-left: 0px;
+    margin: 0px 20px 10px;
+    width: 100%;
+  }
+
+  .search > i {
+    font-size: medium;
+    margin-left: 15px;
+  }
+
+  .search > input {
+    margin-left: 15px;
+    font-size: medium;
+    width: 80%;
+  }
+
+  #search-btn {
+    width: 100%;
+    height: 45px;
   }
 }
