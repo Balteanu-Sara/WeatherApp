@@ -854,6 +854,7 @@ hr {
   }
 
   .detail {
+    border-radius: 10px;
     flex-direction: column;
     justify-content: center;
     height: 75px;
@@ -869,5 +870,48 @@ hr {
 
   .text2 > span {
     font-size: 25px;
+  }
+
+  .daily-forecast {
+    margin: 0px 20px 10px;
+  }
+
+  .daily-forecast > p {
+    font-size: 20px;
+  }
+
+  .day {
+    border-radius: 10px;
+  }
+
+  .interval {
+    font-size: 13px;
+  }
+
+  .section2 {
+    width: 90%;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .header-section {
+    margin: 20px 20px 15px;
+  }
+
+  .header-section > p {
+    font-size: 20px;
+  }
+
+  .left > img {
+    width: auto;
+    height: 45px;
+  }
+
+  .left > p {
+    font-size: large;
+  }
+
+  #temp {
+    font-size: large;
   }
 }
