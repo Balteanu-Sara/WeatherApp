@@ -175,7 +175,6 @@ hr {
 }
 
 .api-container {
-  background-color: bisque;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -589,14 +588,12 @@ hr {
   .api-container {
     flex-direction: column;
     justify-content: unset;
-    background-color: bisque;
-    height: 1500px;
+    height: auto;
   }
 
   .section1 {
-    background-color: brown;
     flex-direction: column;
-    margin: 0px;
+    margin: 0px 0px 10px 0px;
     width: 100%;
   }
 
@@ -670,7 +667,6 @@ hr {
   .days {
     display: flex;
     flex-wrap: wrap;
-    /* flex-direction: row;*/
     justify-content: space-evenly;
   }
 
@@ -693,10 +689,45 @@ hr {
   .interval {
     font-size: 15px;
   }
+
+  .section2 {
+    margin: 10px 0px 0px 0px;
+    width: 100%;
+    height: auto;
+    padding: 0px;
+  }
+
+  .header-section {
+    margin: 20px;
+  }
+
+  .header-section > p {
+    font-weight: 500;
+  }
+
+  .hours {
+    height: 400px;
+    margin: 0px 20px 20px 20px;
+  }
+
+  .hour {
+    height: 60px;
+  }
+
+  .left > img {
+    width: auto;
+    height: 50px;
+  }
 }
 
 @media (max-width: 655px) {
   .text2 > span {
     font-size: 15px;
+  }
+}
+
+@media (max-width: 625px) {
+  .text2 > span {
+    font-size: 10px;
   }
 }
