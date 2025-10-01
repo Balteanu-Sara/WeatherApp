@@ -8,6 +8,7 @@
   --dark-grey: #25253f;
   --light-grey: #2f2f49;
   --outline-grey: #3b3b55;
+  --almost-white: #9495aa;
   --white: #ffffff;
   --blue-sky: #4657d9;
 }
@@ -88,7 +89,7 @@ hr {
 }
 
 .setting > p {
-  color: #9495aa;
+  color: var(--almost-white);
   font-weight: 400;
   margin-left: 5px;
   margin-bottom: 5px;
@@ -587,16 +588,16 @@ hr {
 
   .api-container {
     flex-direction: column;
+    justify-content: unset;
     background-color: bisque;
     height: 1500px;
   }
 
   .section1 {
-    background-color: #02012b;
+    background-color: brown;
     flex-direction: column;
     margin: 0px;
-    width: 95%;
-    height: 745px;
+    width: 100%;
   }
 
   .current-weather {
@@ -633,6 +634,7 @@ hr {
     justify-content: space-around;
     flex-wrap: wrap;
     height: 150px;
+    margin-bottom: 10px;
   }
 
   .detail {
@@ -644,23 +646,57 @@ hr {
     padding: 10px;
   }
 
-  .detail > p {
-    margin-top: 10px;
-  }
-
   .specific-detail {
     margin-right: 0px;
   }
 
   .text1 {
-    margin: 0px;
+    margin: 10px 0px 0px 0px;
     font-size: 15px;
     font-weight: 300;
   }
 
   .text2 {
-    margin-bottom: 0px;
+    margin: 6px 0px;
     font-size: 20px;
     font-weight: 400;
+  }
+
+  .daily-forecast {
+    height: 330px;
+    justify-content: unset;
+  }
+
+  .days {
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-direction: row;*/
+    justify-content: space-evenly;
+  }
+
+  .day {
+    width: 20%;
+    height: 130px;
+    margin-top: 10px;
+    font-weight: 400;
+  }
+
+  .day > p {
+    font-size: 15px;
+  }
+
+  .day > img {
+    width: auto;
+    height: 50px;
+  }
+
+  .interval {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 655px) {
+  .text2 > span {
+    font-size: 15px;
   }
 }
