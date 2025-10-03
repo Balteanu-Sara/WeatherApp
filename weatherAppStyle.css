@@ -141,6 +141,7 @@ hr {
   display: flex;
   background-color: var(--dark-grey);
   align-items: center;
+  position: relative;
   width: 70%;
   height: 50px;
   border-radius: 10px;
@@ -162,6 +163,33 @@ hr {
 
 .search > input::placeholder {
   color: var(--white);
+}
+
+#suggestions {
+  position: absolute;
+  top: 55px;
+  left: 0px;
+  /* display: none; */
+  border-radius: 10px;
+  width: 100%;
+  height: 110px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  list-style: none;
+  background-color: var(--dark-grey);
+  margin-bottom: 5px var(--dark-grey);
+}
+
+li {
+  background-color: brown;
+  margin: 6px 10px;
+  height: 35px;
+  font-family: "DM Sans", sans-serif;
+  font-size: larger;
+  text-align: left;
+  border-radius: 5px;
+  padding-left: 10px;
 }
 
 #search-btn {
