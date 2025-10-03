@@ -65,7 +65,7 @@ header > img {
 }
 
 #settings {
-  display: block;
+  display: none;
   top: 60px;
   right: 20px;
   position: absolute;
@@ -100,12 +100,14 @@ hr {
 .options {
   display: flex;
   flex-direction: column;
+  align-items: center;
   font-weight: 500;
 }
 
 .options > p {
   margin: 5px 2px;
   font-size: larger;
+  border-radius: 5px;
 }
 
 .container {
@@ -900,6 +902,10 @@ hr {
 
   .header-section > p {
     font-size: 20px;
+  }
+
+  .hour {
+    height: 60px;
   }
 
   .left > img {
