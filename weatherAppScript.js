@@ -26,6 +26,8 @@ const precipitation = {
 };
 
 const searchInput = document.getElementById("search-input");
+const suggestionsContainer = document.querySelector(".suggestions-container");
+const actualSuggestions = document.getElementById("actual-suggestions");
 const searchBtn = document.getElementById("search-btn");
 
 const currentLocation = document.getElementById("current-location");
@@ -108,4 +110,55 @@ inSet.addEventListener("click", () => {
   inSet.style.backgroundColor = "var(--outline-grey)";
   precipitation.mm = false;
   mmSet.style.backgroundColor = "unset";
+});
+
+const showNoResults = () => {
+  const apiContainer = document.querySelector(".api-container");
+  apiContainer.innerHTML =
+    "<p style=\"font-family: 'DM Sans',sans-serif\">No search result found!</p>";
+};
+
+const showSuggestions = () => {
+  actualSuggestions.innerHTML = "";
+
+  fetch(`${coordinatesUrl}${searchInput.value}`)
+    .then((res) => res.json())
+    .then((suggestions) => {
+      if (!suggestions.results) {
+        suggestionsContainer.style.display = "none";
+        return;
+      }
+
+      suggestionsContainer.style.display = "block";
+      console.log("am ajuns aici");
+      console.log(suggestions.results);
+      suggestions.results.forEach((suggestion) => {
+        const li = document.createElement("li");
+        li.textContent = suggestion.admin1
+          ? `${suggestion.name}, ${suggestion.admin1}, ${suggestion.country_code}`
+          : `${suggestion.name}, ${suggestion.country_code}`;
+        li.className = `${suggestion.latitude} ${suggestion.longitude} ${suggestion.timezone}`;
+
+        li.addEventListener("click", () => {
+          searchInput.value = li.textContent;
+          [latitude, longitude, timezone] = li.className.split(" ");
+          suggestionsContainer.style.display = "none";
+        });
+        actualSuggestions.appendChild(li);
+      });
+      console.log(latitude, longitude, timezone);
+      console.log("am iesit");
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
+searchInput.addEventListener("input", () => {
+  if (searchInput.value.trim().length < 2) {
+    suggestionsContainer.style.display = "none";
+    return;
+  }
+
+  showSuggestions();
 });

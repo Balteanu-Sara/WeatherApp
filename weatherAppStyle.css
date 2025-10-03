@@ -178,7 +178,7 @@ hr {
 #actual-suggestions {
   margin: 5px 0px;
   list-style: none;
-  height: 110px;
+  max-height: 110px;
   overflow-y: scroll;
   scrollbar-width: none;
   scroll-behavior: smooth;
@@ -194,8 +194,12 @@ li {
   align-items: center;
   border-radius: 5px;
   padding-left: 10px;
+  cursor: pointer;
 }
 
+li:hover {
+  background-color: var(--almost-white);
+}
 #search-btn {
   width: 100px;
   height: 50px;
