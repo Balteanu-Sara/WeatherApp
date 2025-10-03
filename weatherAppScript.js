@@ -160,5 +160,5 @@ searchInput.addEventListener("input", () => {
     return;
   }
 
-  showSuggestions();
+  setTimeout(showSuggestions, 500);
 });
