@@ -74,10 +74,28 @@ unitsBtn.addEventListener("click", () => {
   settings.style.display = settings.style.display === "none" ? "block" : "none";
 });
 
-const changeUnit = (unit) => {
-  if (unit === 0) {
-    console.log("temperature");
-  }
+const toCelsius = (degrees) => {
+  return Math.round(((degrees - 32) * 5) / 9);
+};
+
+const toFahrenheit = (degrees) => {
+  return Math.round(32 + (degrees * 9) / 5);
+};
+
+const toKm = (speed) => {
+  return Math.round(speed * 1.60934);
+};
+
+const toMph = (speed) => {
+  return Math.round(speed / 1.60934);
+};
+
+const toMm = (precip) => {
+  return Math.round(precip * 25.4);
+};
+
+const toIn = (precip) => {
+  return Math.round(precip * 0.0393700787);
 };
 
 const changeTemperature = (func) => {
@@ -129,71 +147,17 @@ const changePrecipitation = (func) => {
   precipitationElement.innerHTML = `${newPrecip} <span>${precipitationUnit.textContent}</span>`;
 };
 
-const toCelsius = (degrees) => {
-  return Math.round(((degrees - 32) * 5) / 9);
+const changeUnit = (unit) => {
+  if (unit === 0) {
+    units[unit].celsius
+      ? changeTemperature(toCelsius)
+      : changeTemperature(toFahrenheit);
+  } else if (unit === 1) {
+    units[unit].km ? changeSpeed(toKm) : changeSpeed(toMph);
+  } else if (unit === 2) {
+    units[unit].mm ? changePrecipitation(toMm) : changePrecipitation(toIn);
+  }
 };
-
-const toFahrenheit = (degrees) => {
-  return Math.round(31 + (degrees * 9) / 5);
-};
-
-celsiusSet.addEventListener("click", () => {
-  temperature.celsius = true;
-  celsiusSet.style.backgroundColor = "var(--outline-grey)";
-  temperature.fahrenheit = false;
-  fahrenheitSet.style.backgroundColor = "unset";
-});
-
-fahrenheitSet.addEventListener("click", () => {
-  temperature.fahrenheit = true;
-  fahrenheitSet.style.backgroundColor = "var(--outline-grey)";
-  temperature.celsius = false;
-  celsiusSet.style.backgroundColor = "unset";
-});
-
-const toKm = (speed) => {
-  return Math.round(speed * 1.60934);
-};
-
-const toMph = (speed) => {
-  return Math.round(speed / 1.60934);
-};
-
-kmSet.addEventListener("click", () => {
-  windSpeed.km = true;
-  kmSet.style.backgroundColor = "var(--outline-grey)";
-  windSpeed.mph = false;
-  mphSet.style.backgroundColor = "unset";
-});
-
-mphSet.addEventListener("click", () => {
-  windSpeed.mph = true;
-  mphSet.style.backgroundColor = "var(--outline-grey)";
-  windSpeed.km = false;
-  kmSet.style.backgroundColor = "unset";
-});
-
-const toMm = (precip) => {
-  return Math.round(precip * 25.4);
-};
-
-const toIn = (precip) => {
-  return Math.round(precip / 25.4);
-};
-
-mmSet.addEventListener("click", () => {
-  precipitation.mm = true;
-  mmSet.style.backgroundColor = "var(--outline-grey)";
-  precipitation.in = false;
-  inSet.style.backgroundColor = "unset";
-});
-
-inSet.addEventListener("click", () => {
-  precipitation.in = true;
-  inSet.style.backgroundColor = "var(--outline-grey)";
-  precipitation.mm = false;
-  mmSet.style.backgroundColor = "unset";
-});
 
 const showNoResults = () => {
   const apiContainer = document.querySelector(".api-container");
@@ -236,6 +200,60 @@ const showSuggestions = () => {
       console.error(err);
     });
 };
+
+celsiusSet.addEventListener("click", () => {
+  if (temperature.celsius) return;
+  temperature.celsius = true;
+  celsiusSet.style.backgroundColor = "var(--outline-grey)";
+  temperature.fahrenheit = false;
+  fahrenheitSet.style.backgroundColor = "unset";
+  changeUnit(0);
+});
+
+fahrenheitSet.addEventListener("click", () => {
+  if (temperature.fahrenheit) return;
+  temperature.fahrenheit = true;
+  fahrenheitSet.style.backgroundColor = "var(--outline-grey)";
+  temperature.celsius = false;
+  celsiusSet.style.backgroundColor = "unset";
+  changeUnit(0);
+});
+
+kmSet.addEventListener("click", () => {
+  if (windSpeed.km) return;
+  windSpeed.km = true;
+  kmSet.style.backgroundColor = "var(--outline-grey)";
+  windSpeed.mph = false;
+  mphSet.style.backgroundColor = "unset";
+  changeUnit(1);
+});
+
+mphSet.addEventListener("click", () => {
+  if (windSpeed.mph) return;
+  windSpeed.mph = true;
+  mphSet.style.backgroundColor = "var(--outline-grey)";
+  windSpeed.km = false;
+  kmSet.style.backgroundColor = "unset";
+  changeUnit(1);
+});
+
+mmSet.addEventListener("click", () => {
+  if (precipitation.mm) return;
+  precipitation.mm = true;
+  mmSet.style.backgroundColor = "var(--outline-grey)";
+  precipitation.in = false;
+  inSet.style.backgroundColor = "unset";
+  changeUnit(2);
+});
+
+inSet.addEventListener("click", () => {
+  if (precipitation.in) return;
+  precipitation.in = true;
+  inSet.style.backgroundColor = "var(--outline-grey)";
+  precipitation.mm = false;
+  mmSet.style.backgroundColor = "unset";
+  changeUnit(2);
+});
 
 searchInput.addEventListener("input", () => {
   if (searchInput.value.trim().length < 2) {
