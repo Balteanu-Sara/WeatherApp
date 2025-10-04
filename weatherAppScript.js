@@ -1,4 +1,5 @@
 const unitsBtn = document.getElementById("units-btn");
+const units = [];
 
 const celsiusSet = document.getElementById("celsius");
 celsiusSet.style.backgroundColor = "var(--outline-grey)";
@@ -8,6 +9,7 @@ const temperature = {
   celsius: true,
   fahrenheit: false,
 };
+units.push(temperature);
 const kmSet = document.getElementById("km");
 kmSet.style.backgroundColor = "var(--outline-grey)";
 const mphSet = document.getElementById("mph");
@@ -16,6 +18,7 @@ const windSpeed = {
   km: true,
   mph: false,
 };
+units.push(windSpeed);
 const mmSet = document.getElementById("mm");
 mmSet.style.backgroundColor = "var(--outline-grey)";
 const inSet = document.getElementById("in");
@@ -24,6 +27,7 @@ const precipitation = {
   mm: true,
   in: false,
 };
+units.push(precipitation);
 
 const searchInput = document.getElementById("search-input");
 const suggestionsContainer = document.querySelector(".suggestions-container");
@@ -70,6 +74,69 @@ unitsBtn.addEventListener("click", () => {
   settings.style.display = settings.style.display === "none" ? "block" : "none";
 });
 
+const changeUnit = (unit) => {
+  if (unit === 0) {
+    console.log("temperature");
+  }
+};
+
+const changeTemperature = (func) => {
+  const oldDegree = parseInt(currentTemp.textContent.replace("°", ""));
+  const newDegree = func(oldDegree);
+  currentTemp.textContent = `${newDegree}°`;
+
+  const oldFeelsLike = parseInt(feelsLikeElement.textContent.replace("°", ""));
+  const newFeelsLike = func(oldFeelsLike);
+  feelsLikeElement.textContent = `${newFeelsLike}°`;
+
+  const highestTempElements = document.querySelectorAll("#highest-temp");
+  highestTempElements.forEach((element) => {
+    const oldDegree = parseInt(element.textContent.replace("°", ""));
+    const newDegree = func(oldDegree);
+    element.textContent = `${newDegree}°`;
+  });
+
+  const lowestTempElements = document.querySelectorAll("#lowest-temp");
+  lowestTempElements.forEach((element) => {
+    const oldDegree = parseInt(element.textContent.replace("°", ""));
+    const newDegree = func(oldDegree);
+    element.textContent = `${newDegree}°`;
+  });
+
+  const tempElements = document.querySelectorAll("#temp");
+  tempElements.forEach((element) => {
+    const oldDegree = parseInt(element.textContent.replace("°", ""));
+    const newDegree = func(oldDegree);
+    element.textContent = `${newDegree}°`;
+  });
+};
+
+const changeSpeed = (func) => {
+  const oldSpeed = parseInt(
+    speedElement.textContent.replace(/\s?((km\/h)|(mph))/, "")
+  );
+  const newSpeed = func(oldSpeed);
+  speedUnit.textContent = windSpeed.km ? "km/h" : "mph";
+  speedElement.innerHTML = `${newSpeed} <span>${speedUnit.textContent}</span>`;
+};
+
+const changePrecipitation = (func) => {
+  const oldPrecip = parseInt(
+    precipitationElement.textContent.replace(/\s?((mm)|(in))/, "")
+  );
+  const newPrecip = func(oldPrecip);
+  precipitationUnit.textContent = precipitation.mm ? "mm" : "in";
+  precipitationElement.innerHTML = `${newPrecip} <span>${precipitationUnit.textContent}</span>`;
+};
+
+const toCelsius = (degrees) => {
+  return Math.round(((degrees - 32) * 5) / 9);
+};
+
+const toFahrenheit = (degrees) => {
+  return Math.round(31 + (degrees * 9) / 5);
+};
+
 celsiusSet.addEventListener("click", () => {
   temperature.celsius = true;
   celsiusSet.style.backgroundColor = "var(--outline-grey)";
@@ -84,6 +151,14 @@ fahrenheitSet.addEventListener("click", () => {
   celsiusSet.style.backgroundColor = "unset";
 });
 
+const toKm = (speed) => {
+  return Math.round(speed * 1.60934);
+};
+
+const toMph = (speed) => {
+  return Math.round(speed / 1.60934);
+};
+
 kmSet.addEventListener("click", () => {
   windSpeed.km = true;
   kmSet.style.backgroundColor = "var(--outline-grey)";
@@ -97,6 +172,14 @@ mphSet.addEventListener("click", () => {
   windSpeed.km = false;
   kmSet.style.backgroundColor = "unset";
 });
+
+const toMm = (precip) => {
+  return Math.round(precip * 25.4);
+};
+
+const toIn = (precip) => {
+  return Math.round(precip / 25.4);
+};
 
 mmSet.addEventListener("click", () => {
   precipitation.mm = true;
