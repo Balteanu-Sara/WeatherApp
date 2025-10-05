@@ -76,6 +76,7 @@
         </div>
         <button id="search-btn">Search</button>
       </div>
+      <div class="no-results">No search result found!</div>
       <div class="api-container">
         <div class="section1">
           <div class="current-weather">
@@ -85,13 +86,13 @@
             </div>
             <div class="right-side">
               <img src="./icons/icon-drizzle.webp" alt="" />
-              <p id="current-temp">20°</p>
+              <p id="current-temp">-1°</p>
             </div>
           </div>
           <div class="details">
             <div class="detail specific-detail">
               <p class="text1">Feels Like</p>
-              <p class="text2" id="feels-like">18°</p>
+              <p class="text2" id="feels-like">-18°</p>
             </div>
             <div class="detail specific-detail">
               <p class="text1">Humidity</p>
@@ -103,7 +104,7 @@
             </div>
             <div class="detail">
               <p class="text1">Precipitation</p>
-              <p class="text2" id="precipitation">0 <span>mm</span></p>
+              <p class="text2" id="precipitation">5 <span>mm</span></p>
             </div>
           </div>
           <div class="daily-forecast">
@@ -113,8 +114,8 @@
                 <p id="week-day">Tue</p>
                 <img src="./icons/icon-drizzle.webp" alt="" />
                 <div class="interval">
-                  <p id="highest-temp">20°</p>
-                  <p id="lowest-temp">14°</p>
+                  <p id="highest-temp">-14°</p>
+                  <p id="lowest-temp">-20°</p>
                 </div>
               </div>
               <div class="day specific-day">
@@ -165,7 +166,6 @@
                   <p id="lowest-temp">14°</p>
                 </div>
               </div>
-              <!-- possible inserations of each day via handling api in js file (7 days of forecast) -->
             </div>
           </div>
         </div>
@@ -184,7 +184,7 @@
                 <img src="./icons/icon-drizzle.webp" alt="" />
                 <p id="hour">3 <span id="daytime">PM</span></p>
               </div>
-              <p id="temp">21°</p>
+              <p id="temp">-21°</p>
             </div>
             <div class="hour">
               <div class="left">

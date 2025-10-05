@@ -213,6 +213,17 @@ li:hover {
   cursor: pointer;
 }
 
+.no-results {
+  display: none;
+  width: 100%;
+  text-align: center;
+  color: var(--white);
+  font-family: "DM Sans", sans-serif;
+  font-size: larger;
+  font-weight: 600;
+  margin: 10px;
+}
+
 .api-container {
   display: flex;
   flex-direction: row;
@@ -635,6 +646,12 @@ li:hover {
     font-weight: 400;
     font-size: medium;
     border: none; /*nu ramane asa */
+  }
+
+  .no-results {
+    font-size: medium;
+    font-weight: 600;
+    margin: 10px;
   }
 
   .api-container {
