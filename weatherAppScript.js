@@ -45,6 +45,29 @@ const speedUnit = speedElement.querySelector("span");
 const precipitationElement = document.getElementById("precipitation");
 const precipitationUnit = precipitationElement.querySelector("span");
 
+const weekdays = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 const dailyForecast = [
   {
     weekday: "Tue",
@@ -66,8 +89,8 @@ const coordinatesUrl = "https://geocoding-api.open-meteo.com/v1/search?name=";
 const dataUrl = "https://api.open-meteo.com/v1/forecast?";
 let latitude;
 let longitude;
-let timezone;
-const detailsUrl = `latitude=${latitude}&longitude=${longitude}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&hourly=temperature_2m,relative_humidity_2m&timezone=${timezone}`;
+let city;
+let country;
 
 unitsBtn.addEventListener("click", () => {
   const settings = document.getElementById("settings");
@@ -159,12 +182,6 @@ const changeUnit = (unit) => {
   }
 };
 
-const showNoResults = () => {
-  const apiContainer = document.querySelector(".api-container");
-  apiContainer.innerHTML =
-    "<p style=\"font-family: 'DM Sans',sans-serif\">No search result found!</p>";
-};
-
 const showSuggestions = () => {
   actualSuggestions.innerHTML = "";
 
@@ -177,28 +194,62 @@ const showSuggestions = () => {
       }
 
       suggestionsContainer.style.display = "block";
-      console.log("am ajuns aici");
       console.log(suggestions.results);
       suggestions.results.forEach((suggestion) => {
         const li = document.createElement("li");
         li.textContent = suggestion.admin1
           ? `${suggestion.name}, ${suggestion.admin1}, ${suggestion.country_code}`
           : `${suggestion.name}, ${suggestion.country_code}`;
-        li.className = `${suggestion.latitude} ${suggestion.longitude} ${suggestion.timezone}`;
+        li.className = `${suggestion.latitude} ${suggestion.longitude} ${suggestion.name} ${suggestion.country}`;
 
         li.addEventListener("click", () => {
           searchInput.value = li.textContent;
-          [latitude, longitude, timezone] = li.className.split(" ");
+          [latitude, longitude, city, country] = li.className.split(" ");
+
           suggestionsContainer.style.display = "none";
         });
         actualSuggestions.appendChild(li);
       });
-      console.log(latitude, longitude, timezone);
-      console.log("am iesit");
     })
     .catch((err) => {
       console.error(err);
     });
+};
+
+const showNoResults = () => {
+  const noResults = document.querySelector(".no-results");
+  const apiContainer = document.querySelector(".api-container");
+  noResults.style.display = "block";
+  apiContainer.style.display = "none";
+};
+
+const changeCurrentWeatherSection = (data) => {
+  currentLocation.textContent = `${city}, ${country}`;
+
+  const weekday = weekdays[new Date(data.current_weather.time).getDay()];
+  const day = new Date(data.current_weather.time).getDate();
+  const month = months[new Date(data.current_weather.time).getMonth()];
+  const year = new Date(data.current_weather).getFullYear();
+  currentDate.textContent = `${weekday}, ${day} ${month}, ${year}`;
+  currentTemp.textContent = units[0].celsius
+    ? `${Math.round(data.current_weather.temperature)}°`
+    : `${toFahrenheit(data.current_weather.temperature)}°`;
+};
+
+const showResults = (data) => {
+  changeCurrentWeatherSection(data);
+};
+
+const extractData = async () => {
+  try {
+    const detailsUrl = `latitude=${latitude}&longitude=${longitude}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&hourly=temperature_2m,relative_humidity_2m&timezone=auto`;
+    const data = await fetch(dataUrl + detailsUrl);
+    const result = await data.json();
+    console.log(result);
+    showResults(result);
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 celsiusSet.addEventListener("click", () => {
@@ -262,4 +313,18 @@ searchInput.addEventListener("input", () => {
   }
 
   setTimeout(showSuggestions, 500);
+});
+
+searchBtn.addEventListener("click", () => {
+  if (searchInput.value.trim().length === 0) {
+    latitude = null;
+    longitude = null;
+    city = null;
+    country = null;
+    return;
+  } else if (!latitude || !longitude) {
+    showNoResults();
+  } else {
+    extractData(searchInput.value);
+  }
 });
