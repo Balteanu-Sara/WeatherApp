@@ -226,23 +226,42 @@ const showNoResults = () => {
 const changeCurrentWeatherSection = (data) => {
   currentLocation.textContent = `${city}, ${country}`;
 
-  const weekday = weekdays[new Date(data.current_weather.time).getDay()];
-  const day = new Date(data.current_weather.time).getDate();
-  const month = months[new Date(data.current_weather.time).getMonth()];
-  const year = new Date(data.current_weather).getFullYear();
+  const weekday = weekdays[new Date(data.current.time).getDay()];
+  const day = new Date(data.current.time).getDate();
+  const month = months[new Date(data.current.time).getMonth()];
+  const year = new Date(data.current.time).getFullYear();
   currentDate.textContent = `${weekday}, ${day} ${month}, ${year}`;
   currentTemp.textContent = units[0].celsius
-    ? `${Math.round(data.current_weather.temperature)}°`
-    : `${toFahrenheit(data.current_weather.temperature)}°`;
+    ? `${Math.round(data.current.temperature_2m)}°`
+    : `${toFahrenheit(data.current.temperature_2m)}°`;
+};
+
+const changeDetailsSection = (data) => {
+  feelsLikeElement.textContent = units[0].celsius
+    ? `${Math.round(data.current.apparent_temperature)}°`
+    : `${toFahrenheit(data.current.apparent_temperature)}°`;
+
+  humidityElement.textContent = `${data.current.relative_humidity_2m}%`;
+
+  speedElement.innerHTML = units[1].km
+    ? `${Math.round(data.current.wind_speed_10m)} <span>km/h</span>`
+    : `${toMph(data.current.wind_speed)} <span>mph</span>`;
+
+  precipitationElement.innerHTML = units[2].mm
+    ? `${data.current.precipitation} <span>mm</span>`
+    : `${toIn(data.current.precipitation)} <span>in</span>`;
 };
 
 const showResults = (data) => {
   changeCurrentWeatherSection(data);
+
+  const currentHour = new Date(data.current.time).getHours();
+  changeDetailsSection(data);
 };
 
 const extractData = async () => {
   try {
-    const detailsUrl = `latitude=${latitude}&longitude=${longitude}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&hourly=temperature_2m,relative_humidity_2m&timezone=auto`;
+    const detailsUrl = `latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=temperature_2m_max,temperature_2m_min&current=precipitation,temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m&hourly=temperature_2m`;
     const data = await fetch(dataUrl + detailsUrl);
     const result = await data.json();
     console.log(result);
