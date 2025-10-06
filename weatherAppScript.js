@@ -71,6 +71,7 @@ const months = [
 
 const dayElements = document.querySelectorAll(".day");
 const forecastOptions = document.getElementById("forecast-options");
+const hourElements = document.querySelectorAll(".hour");
 const hourlyForecast = [
   {
     hour: 3,
@@ -266,10 +267,38 @@ const changeDailyForecastSection = (data) => {
   });
 };
 
+const changeHourlyForecast = (data) => {
+  let index = data.hourly.time.indexOf(`${data.current.time.slice(0, -2)}00`);
+
+  hourElements.forEach((element) => {
+    const hourElement = element.querySelector("#hour");
+    const tempElement = element.querySelector("#temp");
+    const hourValue = new Date(data.hourly.time[index]).getHours();
+    const tempValue = data.hourly.temperature_2m[index];
+    if (hourValue >= 13 || hourValue === 0) {
+      hourElement.textContent = hourValue >= 13 ? `${hourValue % 12} ` : "12 ";
+      const spanElement = document.createElement("span");
+      spanElement.textContent = "PM";
+      hourElement.appendChild(spanElement);
+    } else {
+      hourElement.textContent = `${hourValue} `;
+      const spanElement = document.createElement("span");
+      spanElement.textContent = "AM";
+      hourElement.appendChild(spanElement);
+    }
+
+    tempElement.textContent = units[0].celsius
+      ? `${Math.round(tempValue)}°`
+      : `${toFahrenheit(tempValue)}°`;
+    index++;
+  });
+};
+
 const showResults = (data) => {
   changeCurrentWeatherSection(data);
   changeDetailsSection(data);
   changeDailyForecastSection(data);
+  changeHourlyForecast(data);
 };
 
 const extractData = async () => {
