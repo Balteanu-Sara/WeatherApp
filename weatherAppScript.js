@@ -68,14 +68,8 @@ const months = [
   "Nov",
   "Dec",
 ];
-const dailyForecast = [
-  {
-    weekday: "Tue",
-    "highest temp": 20,
-    "lowest temp": 14,
-  },
-];
 
+const dayElements = document.querySelectorAll(".day");
 const forecastOptions = document.getElementById("forecast-options");
 const hourlyForecast = [
   {
@@ -130,14 +124,14 @@ const changeTemperature = (func) => {
   const newFeelsLike = func(oldFeelsLike);
   feelsLikeElement.textContent = `${newFeelsLike}°`;
 
-  const highestTempElements = document.querySelectorAll("#highest-temp");
+  const highestTempElements = document.querySelectorAll(".highest-temp");
   highestTempElements.forEach((element) => {
     const oldDegree = parseInt(element.textContent.replace("°", ""));
     const newDegree = func(oldDegree);
     element.textContent = `${newDegree}°`;
   });
 
-  const lowestTempElements = document.querySelectorAll("#lowest-temp");
+  const lowestTempElements = document.querySelectorAll(".lowest-temp");
   lowestTempElements.forEach((element) => {
     const oldDegree = parseInt(element.textContent.replace("°", ""));
     const newDegree = func(oldDegree);
@@ -252,11 +246,30 @@ const changeDetailsSection = (data) => {
     : `${toIn(data.current.precipitation)} <span>in</span>`;
 };
 
+const changeDailyForecastSection = (data) => {
+  dayElements.forEach((day, index) => {
+    const weekday = weekdays[new Date(data.daily.time[index]).getDay()];
+    const maxTemp = units[0].celsius
+      ? Math.round(data.daily.temperature_2m_max[index])
+      : toFahrenheit(data.daily.temperature_2m_max[index]);
+    const minTemp = units[0].celsius
+      ? Math.round(data.daily.temperature_2m_min[index])
+      : toFahrenheit(data.daily.temperature_2m_min[index]);
+
+    const weekDayElement = day.querySelector(".week-day");
+    weekDayElement.textContent = weekday.slice(0, 3);
+
+    const highestTemp = day.querySelector(".highest-temp");
+    highestTemp.textContent = `${maxTemp}°`;
+    const lowestTemp = day.querySelector(".lowest-temp");
+    lowestTemp.textContent = `${minTemp}°`;
+  });
+};
+
 const showResults = (data) => {
   changeCurrentWeatherSection(data);
-
-  const currentHour = new Date(data.current.time).getHours();
   changeDetailsSection(data);
+  changeDailyForecastSection(data);
 };
 
 const extractData = async () => {
