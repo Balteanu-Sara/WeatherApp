@@ -34,6 +34,10 @@ const suggestionsContainer = document.querySelector(".suggestions-container");
 const actualSuggestions = document.getElementById("actual-suggestions");
 const searchBtn = document.getElementById("search-btn");
 
+const noResults = document.querySelector(".no-results");
+const apiContainer = document.querySelector(".api-container");
+const initialDisplay = apiContainer.style.display;
+
 const currentLocation = document.getElementById("current-location");
 const currentDate = document.getElementById("current-date");
 const currentTemp = document.getElementById("current-temp");
@@ -71,6 +75,8 @@ const months = [
 
 const dayElements = document.querySelectorAll(".day");
 const forecastOptions = document.getElementById("forecast-options");
+const todayOption = document.getElementById("today");
+const tomorrowOption = document.getElementById("tomorrow");
 const hourElements = document.querySelectorAll(".hour");
 const hourlyForecast = [
   {
@@ -212,8 +218,6 @@ const showSuggestions = () => {
 };
 
 const showNoResults = () => {
-  const noResults = document.querySelector(".no-results");
-  const apiContainer = document.querySelector(".api-container");
   noResults.style.display = "block";
   apiContainer.style.display = "none";
 };
@@ -271,7 +275,7 @@ const changeHourlyForecast = (data) => {
   let index = data.hourly.time.indexOf(`${data.current.time.slice(0, -2)}00`);
 
   hourElements.forEach((element) => {
-    const hourElement = element.querySelector("#hour");
+    const hourElement = element.querySelector(".hour-time");
     const tempElement = element.querySelector("#temp");
     const hourValue = new Date(data.hourly.time[index]).getHours();
     const tempValue = data.hourly.temperature_2m[index];
@@ -378,14 +382,116 @@ searchInput.addEventListener("input", () => {
 
 searchBtn.addEventListener("click", () => {
   if (searchInput.value.trim().length === 0) {
+    console.log("primul caz");
+    console.log(searchInput.value);
     latitude = null;
     longitude = null;
-    city = null;
-    country = null;
     return;
-  } else if (!latitude || !longitude) {
-    showNoResults();
-  } else {
-    extractData(searchInput.value);
   }
+
+  if (searchInput.value.trim().length && !latitude && !longitude) {
+    console.log("al doilea caz");
+    console.log(searchInput.value);
+    suggestionsContainer.style.display = "none";
+    fetch(`${coordinatesUrl}${searchInput.value}`)
+      .then((result) => result.json())
+      .then((data) => {
+        if (!data.results[0]) {
+          showNoResults();
+          return;
+        }
+        const first = data.results[0];
+
+        latitude = first.latitude;
+        longitude = first.longitude;
+        country = first.country;
+        city = first.name;
+        searchInput.value = first.admin1
+          ? `${first.name}, ${first.admin1}, ${first.country_code}`
+          : `${first.name}, ${first.country_code}`;
+        extractData();
+        const noResults = document.querySelector(".no-results");
+        const apiContainer = document.querySelector(".api-container");
+        noResults.style.display = "none";
+        apiContainer.style.display = initialDisplay;
+        longitude = null;
+        latitude = null;
+      })
+      .catch((err) => {
+        console.error(err);
+        showNoResults();
+      });
+  } else {
+    console.log("al treilea caz");
+    extractData();
+    const noResults = document.querySelector(".no-results");
+    const apiContainer = document.querySelector(".api-container");
+    noResults.style.display = "none";
+    apiContainer.style.display = initialDisplay;
+    longitude = null;
+    latitude = null;
+  }
+});
+
+forecastOptions.addEventListener("change", (event) => {
+  const selectedOption = event.target.value;
+  console.log(selectedOption);
+
+  if (selectedOption === "today") {
+    document.getElementById("hours").scrollTo({
+      top: hourElements[0].offsetTop,
+      behavior: "smooth",
+    });
+  }
+
+  if (selectedOption === "tomorrow") {
+    const hoursArray = [...hourElements];
+    const tomorrowElement = hoursArray.find((element, index) => {
+      const text = element.querySelector(".hour-time").textContent;
+      return text.startsWith("12") && text.includes("AM") && index > 0;
+    });
+
+    if (tomorrowElement) {
+      hourElements.scrollTo({
+        top: tomorrowElement.offsetTop,
+        behavior: "smooth",
+      });
+    } else {
+      console.warn("No '12 AM' element found for tomorrow.");
+    }
+  }
+});
+
+todayOption.addEventListener("click", () => {
+  console.log("am intrat la click today");
+  hourElements[0].scrollIntoView({
+    behavior: "smooth",
+    block: "nearest",
+    inline: "start",
+  });
+
+  //hoursContainer.scrollTo({ top: first.offsetTop, behavior: "smooth" });
+});
+
+tomorrowOption.addEventListener("click", () => {
+  console.log("am intrat la click tomorrow");
+  const hoursArray = [...hourElements];
+  const tomorrowElement = hoursArray.find((element, index) => {
+    const text = element.querySelector(".hour-time").textContent;
+    return text.startsWith("12") && text.includes("AM") && index > 0;
+  });
+  tomorrowElement.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest",
+    inline: "start",
+  });
+
+  // if (tomorrowElement) {
+  //   hourElements.scrollTo({
+  //     top: tomorrowElement.offsetTop,
+  //     behavior: "smooth",
+  //   });
+  // } else {
+  //   console.warn("No '12 AM' element found for tomorrow.");
+  // }
 });
