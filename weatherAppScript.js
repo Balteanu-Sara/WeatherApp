@@ -183,10 +183,11 @@ const changeUnit = (unit) => {
   }
 };
 
-const showSuggestions = () => {
+const showSuggestions = (value) => {
+  console.log("am intrat la aratat sugestii");
   actualSuggestions.innerHTML = "";
 
-  fetch(`${coordinatesUrl}${searchInput.value}`)
+  fetch(`${coordinatesUrl}${value}`)
     .then((res) => res.json())
     .then((suggestions) => {
       if (!suggestions.results) {
@@ -371,13 +372,99 @@ inSet.addEventListener("click", () => {
   changeUnit(2);
 });
 
+let timeOut;
 searchInput.addEventListener("input", () => {
   if (searchInput.value.trim().length < 2) {
     suggestionsContainer.style.display = "none";
     return;
   }
 
-  setTimeout(showSuggestions, 500);
+  clearTimeout(timeOut);
+  timeOut = setTimeout(() => {
+    showSuggestions(searchInput.value.trim());
+  }, 500);
+});
+
+let selectedIndex = -1;
+searchInput.addEventListener("keydown", (event) => {
+  console.log("am apasat pe ceva ;)");
+
+  if (event.key === "Enter" && selectedIndex === -1 && searchInput.value) {
+    if (latitude && longitude) {
+      extractData();
+      const noResults = document.querySelector(".no-results");
+      const apiContainer = document.querySelector(".api-container");
+      noResults.style.display = "none";
+      apiContainer.style.display = initialDisplay;
+      longitude = null;
+      latitude = null;
+    } else {
+      suggestionsContainer.style.display = "none";
+      fetch(`${coordinatesUrl}${searchInput.value}`)
+        .then((result) => result.json())
+        .then((data) => {
+          if (!data.results[0]) {
+            showNoResults();
+            return;
+          }
+          const first = data.results[0];
+
+          latitude = first.latitude;
+          longitude = first.longitude;
+          country = first.country;
+          city = first.name;
+          searchInput.value = first.admin1
+            ? `${first.name}, ${first.admin1}, ${first.country_code}`
+            : `${first.name}, ${first.country_code}`;
+          extractData();
+          const noResults = document.querySelector(".no-results");
+          const apiContainer = document.querySelector(".api-container");
+          noResults.style.display = "none";
+          apiContainer.style.display = initialDisplay;
+          longitude = null;
+          latitude = null;
+        })
+        .catch((err) => {
+          console.error(err);
+          showNoResults();
+        });
+    }
+    return;
+  }
+
+  const suggestions = actualSuggestions.querySelectorAll("li");
+  if (suggestions.length === 0) return;
+
+  if (event.key === "ArrowDown") {
+    event.preventDefault();
+    selectedIndex =
+      selectedIndex < suggestions.length - 1
+        ? (selectedIndex += 1)
+        : selectedIndex;
+
+    suggestions.forEach((li) => li.classList.remove("active"));
+    suggestions[selectedIndex].classList.add("active");
+    suggestions[selectedIndex].scrollIntoView({ block: "nearest" });
+  }
+
+  if (event.key === "ArrowUp") {
+    event.preventDefault();
+    selectedIndex = selectedIndex > 0 ? (selectedIndex -= 1) : selectedIndex;
+
+    suggestions.forEach((li) => li.classList.remove("active"));
+    suggestions[selectedIndex].classList.add("active");
+    suggestions[selectedIndex].scrollIntoView({ block: "nearest" });
+  }
+
+  if (event.key === "Enter") {
+    event.preventDefault();
+    searchInput.value = suggestions[selectedIndex].textContent;
+    suggestions.forEach((li) => li.classList.remove("active"));
+    [latitude, longitude, city, country] =
+      suggestions[selectedIndex].className.split(" ");
+    suggestionsContainer.style.display = "none";
+    selectedIndex = -1;
+  }
 });
 
 searchBtn.addEventListener("click", () => {
@@ -431,67 +518,4 @@ searchBtn.addEventListener("click", () => {
     longitude = null;
     latitude = null;
   }
-});
-
-forecastOptions.addEventListener("change", (event) => {
-  const selectedOption = event.target.value;
-  console.log(selectedOption);
-
-  if (selectedOption === "today") {
-    document.getElementById("hours").scrollTo({
-      top: hourElements[0].offsetTop,
-      behavior: "smooth",
-    });
-  }
-
-  if (selectedOption === "tomorrow") {
-    const hoursArray = [...hourElements];
-    const tomorrowElement = hoursArray.find((element, index) => {
-      const text = element.querySelector(".hour-time").textContent;
-      return text.startsWith("12") && text.includes("AM") && index > 0;
-    });
-
-    if (tomorrowElement) {
-      hourElements.scrollTo({
-        top: tomorrowElement.offsetTop,
-        behavior: "smooth",
-      });
-    } else {
-      console.warn("No '12 AM' element found for tomorrow.");
-    }
-  }
-});
-
-todayOption.addEventListener("click", () => {
-  console.log("am intrat la click today");
-  hourElements[0].scrollIntoView({
-    behavior: "smooth",
-    block: "nearest",
-    inline: "start",
-  });
-
-  //hoursContainer.scrollTo({ top: first.offsetTop, behavior: "smooth" });
-});
-
-tomorrowOption.addEventListener("click", () => {
-  console.log("am intrat la click tomorrow");
-  const hoursArray = [...hourElements];
-  const tomorrowElement = hoursArray.find((element, index) => {
-    const text = element.querySelector(".hour-time").textContent;
-    return text.startsWith("12") && text.includes("AM") && index > 0;
-  });
-  tomorrowElement.scrollIntoView({
-    behavior: "smooth",
-    block: "nearest",
-    inline: "start",
-  });
-
-  // if (tomorrowElement) {
-  //   hourElements.scrollTo({
-  //     top: tomorrowElement.offsetTop,
-  //     behavior: "smooth",
-  //   });
-  // } else {
-  //   console.warn("No '12 AM' element found for tomorrow.");
-  // }
 });

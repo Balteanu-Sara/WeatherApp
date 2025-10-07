@@ -190,7 +190,7 @@ li {
   margin: 6px 10px;
   height: 35px;
   font-family: "DM Sans", sans-serif;
-  font-size: larger;
+  font-size: large;
   align-items: center;
   border-radius: 5px;
   padding-left: 10px;
@@ -200,6 +200,11 @@ li {
 li:hover {
   background-color: var(--almost-white);
 }
+
+.active {
+  background-color: var(--almost-white);
+}
+
 #search-btn {
   width: 100px;
   height: 50px;
@@ -543,6 +548,14 @@ li:hover {
     width: auto;
     height: 60px;
   }
+
+  .interval {
+    font-size: medium;
+  }
+
+  .highest-temp {
+    margin-right: 13px;
+  }
 }
 
 @media (max-width: 769px) {
@@ -636,8 +649,8 @@ li:hover {
   }
 
   li {
-    height: 30px;
-    font-size: medium;
+    height: 35px;
+    font-size: small;
   }
 
   #search-btn {
@@ -888,7 +901,7 @@ li:hover {
 
   li {
     margin: 5px 10px;
-    font-size: medium;
+    font-size: small;
   }
 
   #search-btn {
@@ -966,7 +979,11 @@ li:hover {
   }
 
   .interval {
-    font-size: 13px;
+    font-size: 11px;
+  }
+
+  .highest-temp {
+    margin-right: 13px;
   }
 
   .section2 {
