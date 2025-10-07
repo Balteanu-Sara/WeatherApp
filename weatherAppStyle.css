@@ -725,6 +725,10 @@ li:hover {
     padding: 10px;
   }
 
+  .detail > p {
+    margin-right: 0px;
+  }
+
   .specific-detail {
     margin-right: 0px;
   }
