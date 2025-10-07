@@ -75,6 +75,7 @@ header > img {
   color: var(--white);
   outline: var(--outline-grey) solid thin;
   border-radius: 10px;
+  z-index: 9999;
 }
 
 .setting {
