@@ -214,11 +214,18 @@ const showSuggestions = (value) => {
         li.textContent = suggestion.admin1
           ? `${suggestion.name}, ${suggestion.admin1}, ${suggestion.country_code}`
           : `${suggestion.name}, ${suggestion.country_code}`;
-        li.className = `${suggestion.latitude} ${suggestion.longitude} ${suggestion.name} ${suggestion.country}`;
+
+        li.dataset.latitude = suggestion.latitude;
+        li.dataset.longitude = suggestion.longitude;
+        li.dataset.city = suggestion.name;
+        li.dataset.country = suggestion.country;
 
         li.addEventListener("click", () => {
           searchInput.value = li.textContent;
-          [latitude, longitude, city, country] = li.className.split(" ");
+          latitude = li.dataset.latitude;
+          longitude = li.dataset.longitude;
+          city = li.dataset.city;
+          country = li.dataset.country;
 
           suggestionsContainer.style.display = "none";
         });
@@ -236,6 +243,7 @@ const showNoResults = () => {
 };
 
 const changeCurrentWeatherSection = (data) => {
+  console.log("choose the country: ", country);
   currentLocation.textContent = `${city}, ${country}`;
 
   const weekday = weekdays[new Date(data.current.time).getDay()];
