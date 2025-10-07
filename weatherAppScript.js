@@ -93,6 +93,19 @@ let longitude;
 let city;
 let country;
 
+const initialUrl = `latitude=41.89193&longitude=12.51133&timezone=auto&daily=temperature_2m_max,temperature_2m_min&current=precipitation,temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m&hourly=temperature_2m`;
+fetch(dataUrl + initialUrl)
+  .then((res) => res.json())
+  .then((result) => {
+    console.log(result);
+    city = "Rome";
+    country = "Italy";
+    showResults(result);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
 unitsBtn.addEventListener("click", () => {
   const settings = document.getElementById("settings");
   settings.style.display = settings.style.display === "none" ? "block" : "none";
@@ -184,7 +197,6 @@ const changeUnit = (unit) => {
 };
 
 const showSuggestions = (value) => {
-  console.log("am intrat la aratat sugestii");
   actualSuggestions.innerHTML = "";
 
   fetch(`${coordinatesUrl}${value}`)
@@ -387,8 +399,6 @@ searchInput.addEventListener("input", () => {
 
 let selectedIndex = -1;
 searchInput.addEventListener("keydown", (event) => {
-  console.log("am apasat pe ceva ;)");
-
   if (event.key === "Enter" && selectedIndex === -1 && searchInput.value) {
     if (latitude && longitude) {
       extractData();
