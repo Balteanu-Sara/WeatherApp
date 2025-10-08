@@ -37,7 +37,7 @@ const icons = [
   },
   {
     name: "night",
-    src: "./icons/icon-clear-night.webp",
+    src: "./icons/icon-clear-night-smaller.webp",
     priority: 1,
   },
   {
@@ -141,7 +141,7 @@ let longitude;
 let city;
 let country;
 
-const initialUrl = `latitude=41.89193&longitude=12.51133&timezone=auto&daily=temperature_2m_max,temperature_2m_min&current=precipitation,temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m&hourly=temperature_2m`;
+const initialUrl = `latitude=41.89193&longitude=12.51133&timezone=auto&daily=temperature_2m_max,temperature_2m_min,cloud_cover_mean,visibility_mean,precipitation_probability_mean,snowfall_water_equivalent_sum,weather_code&current=precipitation,temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m&hourly=temperature_2m,rain,cloud_cover_mid,cloud_cover,visibility,snowfall,is_day,weather_code`;
 fetch(dataUrl + initialUrl)
   .then((res) => res.json())
   .then((result) => {
@@ -294,8 +294,6 @@ const selectHourlyIcon = (hour, data) => {
   const reversedIcons = [...icons].reverse();
 
   const indexHour = data.time.indexOf(`${hour.slice(0, -2)}00`);
-  console.log(indexHour);
-  console.log(hour);
   if (data.weather_code[indexHour] >= 95) return reversedIcons[0].src;
   if (data.snowfall[indexHour] > 0) return reversedIcons[1].src;
   if (data.rain[indexHour] > 0.5) return reversedIcons[2].src;
@@ -327,8 +325,8 @@ const selectDailyIcon = (day, data) => {
     return reversedIcons[3].src;
   if (data.weather_code[indexDay] === 45 || data.weather_code[indexDay] === 48)
     return reversedIcons[4].src;
-  if (data.cloud_cover[indexDay] >= 70) return reversedIcons[5].src;
-  if (data.cloud_cover[indexDay] >= 30) return reversedIcons[6].src;
+  if (data.cloud_cover_mean[indexDay] >= 70) return reversedIcons[5].src;
+  if (data.cloud_cover_mean[indexDay] >= 30) return reversedIcons[6].src;
   else {
     return reversedIcons[8].src;
   }
@@ -388,9 +386,9 @@ const changeDailyForecastSection = (data) => {
     const lowestTemp = day.querySelector(".lowest-temp");
     lowestTemp.textContent = `${minTemp}°`;
 
-    // const src = selectDailyIcon(data.daily.time[index], data.daily);
-    // const imgElement = day.querySelector("img");
-    // imgElement.src = src;
+    const src = selectDailyIcon(data.daily.time[index], data.daily);
+    const imgElement = day.querySelector("img");
+    imgElement.src = src;
   });
 };
 
@@ -419,9 +417,9 @@ const changeHourlyForecast = (data) => {
       : `${toFahrenheit(tempValue)}°`;
     index++;
 
-    // const src = selectHourlyIcon(data.hourly.time[index], data.hourly);
-    // const imgElement = element.querySelector(".left img");
-    // imgElement.src = src;
+    const src = selectHourlyIcon(data.hourly.time[index], data.hourly);
+    const imgElement = element.querySelector(".left img");
+    imgElement.src = src;
   });
 };
 
