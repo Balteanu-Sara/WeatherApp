@@ -686,8 +686,6 @@ forecastOptions.addEventListener("change", () => {
   }
 });
 
-let firstVisible;
-
 hoursContainer.addEventListener("scroll", () => {
   const isAbove = isTomorrowAbove();
 
