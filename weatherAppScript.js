@@ -32,47 +32,47 @@ units.push(precipitation);
 const icons = [
   {
     name: "sunny",
-    link: "icon-sunny.webp",
+    src: "./icons/icon-sunny.webp",
     priority: 1,
   },
   {
     name: "night",
-    link: "icon-clear.night.webp",
+    src: "./icons/icon-clear-night.webp",
     priority: 1,
   },
   {
     name: "partly-cloudy",
-    link: "icon-partly-cloudy.webp",
+    src: "./icons/icon-partly-cloudy.webp",
     priority: 2,
   },
   {
     name: "overcast",
-    link: "icon-overcast.webp",
+    src: "./icons/icon-overcast.webp",
     priority: 3,
   },
   {
     name: "fog",
-    link: "icon-fog.webp",
+    src: "./icons/icon-fog.webp",
     priority: 4,
   },
   {
     name: "drizzle",
-    link: "icon-drizzle.webp",
+    src: "./icons/icon-drizzle.webp",
     priority: 5,
   },
   {
     name: "rain",
-    link: "icon-rain.webp",
+    src: "./icons/icon-rain.webp",
     priority: 6,
   },
   {
     name: "snow",
-    link: "icon-snow.webp",
+    src: "./icons/icon-snow.webp",
     priority: 7,
   },
   {
     name: "storm",
-    link: "icon-storm.webp",
+    src: "./icons/icon-storm.webp",
     priority: 8,
   },
 ];
@@ -290,6 +290,50 @@ const showNoResults = () => {
   apiContainer.style.display = "none";
 };
 
+const selectHourlyIcon = (hour, data) => {
+  const reversedIcons = [...icons].reverse();
+
+  const indexHour = data.time.indexOf(`${hour.slice(0, -2)}00`);
+  console.log(indexHour);
+  console.log(hour);
+  if (data.weather_code[indexHour] >= 95) return reversedIcons[0].src;
+  if (data.snowfall[indexHour] > 0) return reversedIcons[1].src;
+  if (data.rain[indexHour] > 0.5) return reversedIcons[2].src;
+  if (data.rain[indexHour] > 0) return reversedIcons[3].src;
+  if (
+    data.weather_code[indexHour] === 45 ||
+    data.weather_code[indexHour] === 48
+  )
+    return reversedIcons[4].src;
+  if (data.cloud_cover[indexHour] >= 80) return reversedIcons[5].src;
+  if (data.cloud_cover_mid[indexHour] >= 40) return reversedIcons[6].src;
+  else {
+    return data.is_day[indexHour] === 1
+      ? reversedIcons[8].src
+      : reversedIcons[7].src;
+  }
+};
+
+const selectDailyIcon = (day, data) => {
+  const reversedIcons = [...icons].reverse();
+
+  const indexDay = data.time.indexOf(day);
+  if (data.weather_code[indexDay] >= 95) return reversedIcons[0].src;
+  if (data.snowfall_water_equivalent_sum[indexDay] > 0)
+    return reversedIcons[1].src;
+  if (data.precipitation_probability_mean[indexDay] >= 70)
+    return reversedIcons[2].src;
+  if (data.precipitation_probability_mean[indexDay] >= 40)
+    return reversedIcons[3].src;
+  if (data.weather_code[indexDay] === 45 || data.weather_code[indexDay] === 48)
+    return reversedIcons[4].src;
+  if (data.cloud_cover[indexDay] >= 70) return reversedIcons[5].src;
+  if (data.cloud_cover[indexDay] >= 30) return reversedIcons[6].src;
+  else {
+    return reversedIcons[8].src;
+  }
+};
+
 const changeCurrentWeatherSection = (data) => {
   console.log("choose the country: ", country);
   currentLocation.textContent = `${city}, ${country}`;
@@ -302,6 +346,12 @@ const changeCurrentWeatherSection = (data) => {
   currentTemp.textContent = units[0].celsius
     ? `${Math.round(data.current.temperature_2m)}°`
     : `${toFahrenheit(data.current.temperature_2m)}°`;
+
+  const hourValue = data.current.time;
+  const src = selectHourlyIcon(hourValue, data.hourly);
+
+  const imgElement = document.querySelector(".right-side img");
+  imgElement.src = src;
 };
 
 const changeDetailsSection = (data) => {
@@ -337,6 +387,10 @@ const changeDailyForecastSection = (data) => {
     highestTemp.textContent = `${maxTemp}°`;
     const lowestTemp = day.querySelector(".lowest-temp");
     lowestTemp.textContent = `${minTemp}°`;
+
+    // const src = selectDailyIcon(data.daily.time[index], data.daily);
+    // const imgElement = day.querySelector("img");
+    // imgElement.src = src;
   });
 };
 
@@ -348,13 +402,13 @@ const changeHourlyForecast = (data) => {
     const tempElement = element.querySelector("#temp");
     const hourValue = new Date(data.hourly.time[index]).getHours();
     const tempValue = data.hourly.temperature_2m[index];
-    if (hourValue >= 13 || hourValue === 0) {
+    if (hourValue >= 12) {
       hourElement.textContent = hourValue >= 13 ? `${hourValue % 12} ` : "12 ";
       const spanElement = document.createElement("span");
       spanElement.textContent = "PM";
       hourElement.appendChild(spanElement);
     } else {
-      hourElement.textContent = `${hourValue} `;
+      hourElement.textContent = hourValue !== 0 ? `${hourValue} ` : "12 ";
       const spanElement = document.createElement("span");
       spanElement.textContent = "AM";
       hourElement.appendChild(spanElement);
@@ -364,6 +418,10 @@ const changeHourlyForecast = (data) => {
       ? `${Math.round(tempValue)}°`
       : `${toFahrenheit(tempValue)}°`;
     index++;
+
+    // const src = selectHourlyIcon(data.hourly.time[index], data.hourly);
+    // const imgElement = element.querySelector(".left img");
+    // imgElement.src = src;
   });
 };
 
@@ -377,7 +435,7 @@ const showResults = (data) => {
 const extractData = async () => {
   try {
     const detailsUrl1 = `latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=temperature_2m_max,temperature_2m_min&current=precipitation,temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m&hourly=temperature_2m`;
-    const detailsUrl = `latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=temperature_2m_max,temperature_2m_min,cloud_cover_mean,visibility_mean,precipitation_probability_mean,snowfall_water_equivalent_sum&current=precipitation,temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m&hourly=temperature_2m,rain,cloud_cover_mid,cloud_cover,visibility,snowfall,is_day`;
+    const detailsUrl = `latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=temperature_2m_max,temperature_2m_min,cloud_cover_mean,visibility_mean,precipitation_probability_mean,snowfall_water_equivalent_sum,weather_code&current=precipitation,temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m&hourly=temperature_2m,rain,cloud_cover_mid,cloud_cover,visibility,snowfall,is_day,weather_code`;
     const data = await fetch(dataUrl + detailsUrl);
     const result = await data.json();
     console.log(result);
