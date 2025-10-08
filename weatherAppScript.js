@@ -29,6 +29,54 @@ const precipitation = {
 };
 units.push(precipitation);
 
+const icons = [
+  {
+    name: "sunny",
+    link: "icon-sunny.webp",
+    priority: 1,
+  },
+  {
+    name: "night",
+    link: "icon-clear.night.webp",
+    priority: 1,
+  },
+  {
+    name: "partly-cloudy",
+    link: "icon-partly-cloudy.webp",
+    priority: 2,
+  },
+  {
+    name: "overcast",
+    link: "icon-overcast.webp",
+    priority: 3,
+  },
+  {
+    name: "fog",
+    link: "icon-fog.webp",
+    priority: 4,
+  },
+  {
+    name: "drizzle",
+    link: "icon-drizzle.webp",
+    priority: 5,
+  },
+  {
+    name: "rain",
+    link: "icon-rain.webp",
+    priority: 6,
+  },
+  {
+    name: "snow",
+    link: "icon-snow.webp",
+    priority: 7,
+  },
+  {
+    name: "storm",
+    link: "icon-storm.webp",
+    priority: 8,
+  },
+];
+
 const searchInput = document.getElementById("search-input");
 const suggestionsContainer = document.querySelector(".suggestions-container");
 const actualSuggestions = document.getElementById("actual-suggestions");
@@ -328,7 +376,8 @@ const showResults = (data) => {
 
 const extractData = async () => {
   try {
-    const detailsUrl = `latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=temperature_2m_max,temperature_2m_min&current=precipitation,temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m&hourly=temperature_2m`;
+    const detailsUrl1 = `latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=temperature_2m_max,temperature_2m_min&current=precipitation,temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m&hourly=temperature_2m`;
+    const detailsUrl = `latitude=${latitude}&longitude=${longitude}&timezone=auto&daily=temperature_2m_max,temperature_2m_min,cloud_cover_mean,visibility_mean,precipitation_probability_mean,snowfall_water_equivalent_sum&current=precipitation,temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m&hourly=temperature_2m,rain,cloud_cover_mid,cloud_cover,visibility,snowfall,is_day`;
     const data = await fetch(dataUrl + detailsUrl);
     const result = await data.json();
     console.log(result);
@@ -417,6 +466,7 @@ searchInput.addEventListener("keydown", (event) => {
       longitude = null;
       latitude = null;
     } else {
+      console.log(selectedIndex, searchInput.value);
       suggestionsContainer.style.display = "none";
       fetch(`${coordinatesUrl}${searchInput.value}`)
         .then((result) => result.json())
@@ -478,8 +528,10 @@ searchInput.addEventListener("keydown", (event) => {
     event.preventDefault();
     searchInput.value = suggestions[selectedIndex].textContent;
     suggestions.forEach((li) => li.classList.remove("active"));
-    [latitude, longitude, city, country] =
-      suggestions[selectedIndex].className.split(" ");
+    latitude = suggestions[selectedIndex].dataset.latitude;
+    longitude = suggestions[selectedIndex].dataset.longitude;
+    city = suggestions[selectedIndex].dataset.city;
+    country = suggestions[selectedIndex].dataset.country;
     suggestionsContainer.style.display = "none";
     selectedIndex = -1;
   }

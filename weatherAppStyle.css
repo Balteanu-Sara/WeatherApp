@@ -958,6 +958,7 @@ li:hover {
     flex-direction: column;
     justify-content: center;
     height: 75px;
+    margin-bottom: 10px;
   }
 
   .text1 {
