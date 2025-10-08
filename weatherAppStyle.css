@@ -691,7 +691,7 @@ li:hover {
 
   #current-location {
     font-weight: 500;
-    font-size: 30px;
+    font-size: 28px;
   }
 
   #current-date {
@@ -699,13 +699,13 @@ li:hover {
   }
 
   .right-side > img {
-    height: 90px;
+    height: 80px;
     width: auto;
   }
 
   .right-side > p {
     margin: 0px 10px;
-    font-size: 80px;
+    font-size: 70px;
     font-weight: 500;
   }
 
@@ -930,7 +930,7 @@ li:hover {
   #current-location {
     text-align: center;
     font-weight: 600;
-    font-size: 25px;
+    font-size: 20px;
   }
 
   #current-date {

@@ -123,8 +123,13 @@ const months = [
 
 const dayElements = document.querySelectorAll(".day");
 const forecastOptions = document.getElementById("forecast-options");
+let selectedOption = {
+  today: true,
+  tomorrow: false,
+};
 const todayOption = document.getElementById("today");
 const tomorrowOption = document.getElementById("tomorrow");
+const hoursContainer = document.querySelector(".hours");
 const hourElements = document.querySelectorAll(".hour");
 const hourlyForecast = [
   {
@@ -443,6 +448,21 @@ const extractData = async () => {
   }
 };
 
+const isTomorrowAbove = () => {
+  const containerPosition = hoursContainer.getBoundingClientRect();
+  for (element of hourElements) {
+    const elementPosition = element.getBoundingClientRect();
+    const passed = elementPosition.bottom <= containerPosition.bottom;
+    const isTomorrow =
+      element !== hourElements[0] && element.textContent.includes("12 AM");
+
+    if (passed && isTomorrow) {
+      return true;
+    }
+  }
+  return false;
+};
+
 celsiusSet.addEventListener("click", () => {
   if (temperature.celsius) return;
   temperature.celsius = true;
@@ -518,6 +538,7 @@ searchInput.addEventListener("keydown", (event) => {
       const noResults = document.querySelector(".no-results");
       const apiContainer = document.querySelector(".api-container");
       noResults.style.display = "none";
+      suggestionsContainer.style.display = "none";
       apiContainer.style.display = initialDisplay;
       longitude = null;
       latitude = null;
@@ -648,15 +669,35 @@ searchBtn.addEventListener("click", () => {
 
 forecastOptions.addEventListener("change", () => {
   if (forecastOptions.value === "tomorrow") {
+    selectedOption.today = false;
+    selectedOption.tomorrow = true;
     const firstHour = Array.from(hourElements).find(
       (element, index) =>
         element.textContent.trim().includes("12 AM") && index !== 0
     );
 
-    firstHour.scrollIntoView({ behavior: "smooth", block: "start" });
+    firstHour.scrollIntoView({ behavior: "smooth" });
   }
 
   if (forecastOptions.value === "today") {
+    selectedOption.today = true;
+    selectedOption.tomorrow = false;
     hourElements[0].scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+});
+
+let firstVisible;
+
+hoursContainer.addEventListener("scroll", () => {
+  const isAbove = isTomorrowAbove();
+
+  if (isAbove && selectedOption.tomorrow === false) {
+    selectedOption.tomorrow = true;
+    selectedOption.today = false;
+    forecastOptions.value = "tomorrow";
+  } else if (!isAbove && selectedOption.today === false) {
+    selectedOption.tomorrow = false;
+    selectedOption.today = true;
+    forecastOptions.value = "today";
   }
 });
