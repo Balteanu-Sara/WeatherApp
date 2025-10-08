@@ -928,6 +928,7 @@ li:hover {
   }
 
   #current-location {
+    text-align: center;
     font-weight: 600;
     font-size: 25px;
   }
