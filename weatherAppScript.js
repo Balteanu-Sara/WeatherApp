@@ -507,7 +507,7 @@ searchInput.addEventListener("input", () => {
   clearTimeout(timeOut);
   timeOut = setTimeout(() => {
     showSuggestions(searchInput.value.trim());
-  }, 500);
+  }, 300);
 });
 
 let selectedIndex = -1;
@@ -643,5 +643,20 @@ searchBtn.addEventListener("click", () => {
     apiContainer.style.display = initialDisplay;
     longitude = null;
     latitude = null;
+  }
+});
+
+forecastOptions.addEventListener("change", () => {
+  if (forecastOptions.value === "tomorrow") {
+    const firstHour = Array.from(hourElements).find(
+      (element, index) =>
+        element.textContent.trim().includes("12 AM") && index !== 0
+    );
+
+    firstHour.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  if (forecastOptions.value === "today") {
+    hourElements[0].scrollIntoView({ behavior: "smooth", block: "start" });
   }
 });
