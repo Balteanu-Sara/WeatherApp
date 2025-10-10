@@ -237,7 +237,6 @@ li:hover {
   justify-content: center;
   width: 100%;
   height: 750px;
-  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .section1 {
@@ -679,6 +678,7 @@ li:hover {
     flex-direction: column;
     margin: 0px 0px 10px 0px;
     width: 100%;
+    height: auto;
   }
 
   .current-weather {
@@ -980,6 +980,7 @@ li:hover {
 
   .daily-forecast {
     height: auto;
+    min-height: 330px; /*!*/
     margin: 0px 20px 10px;
   }
 
