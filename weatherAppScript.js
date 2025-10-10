@@ -366,7 +366,7 @@ const changeDetailsSection = (data) => {
 
   speedElement.innerHTML = units[1].km
     ? `${Math.round(data.current.wind_speed_10m)} <span>km/h</span>`
-    : `${toMph(data.current.wind_speed)} <span>mph</span>`;
+    : `${toMph(data.current.wind_speed_10m)} <span>mph</span>`;
 
   precipitationElement.innerHTML = units[2].mm
     ? `${data.current.precipitation} <span>mm</span>`
