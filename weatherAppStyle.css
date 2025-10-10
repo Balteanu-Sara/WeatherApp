@@ -978,6 +978,7 @@ li:hover {
   }
 
   .daily-forecast {
+    height: auto;
     margin: 0px 20px 10px;
   }
 
