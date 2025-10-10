@@ -980,7 +980,6 @@ li:hover {
 
   .daily-forecast {
     height: auto;
-    min-height: 330px; /*!*/
     margin: 0px 20px 10px;
   }
 
