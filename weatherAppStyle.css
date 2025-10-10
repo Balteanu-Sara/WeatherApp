@@ -904,6 +904,10 @@ li:hover {
     left: 0px;
   }
 
+  #actual-suggestions {
+    max-height: 200px;
+  }
+
   li {
     margin: 5px 10px;
     font-size: small;
