@@ -2,7 +2,7 @@
 
 ## Description
 
-WeatherNow is a clean and minimalistic application build with HTML, CSS and Vanilla JavaScript. It delivers real-time weather information, hourly updates and a 7-day forecast using the Open-Meteo API. The interface is designed to be clear, intuitive and easy to navigate.
+WeatherNow is a clean and minimalistic application built with HTML, CSS and Vanilla JavaScript. It delivers real-time weather information, hourly updates and a 7-day forecast using the Open-Meteo API. The interface is designed to be clear, intuitive and easy to navigate.
 
 ## Features
 
