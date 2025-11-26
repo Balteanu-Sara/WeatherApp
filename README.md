@@ -49,23 +49,19 @@ More info: https://open-meteo.com/en/docs
 Follow the steps below to run the project locally:
 
 ### 1. Clone the repository
-
 ```bash
 git clone https://github.com/Balteanu-Sara/WeatherApp.git
 ```
 
 ### 2. Navigate into the project folder
-
 ```bash
 cd WeatherApp
 ```
 
 ### 3. Open the project
-
 Since this is a front-end project, you can simply open the main HTML file and use the "Live Server" feature in VS Code.
 
 ### 4. Using the App
-
 - Enter or select a location
 
 - View the current weather
